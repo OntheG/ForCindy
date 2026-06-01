@@ -390,7 +390,13 @@
 <audio id="bgAudio" src="forcindy.mp3" loop preload="auto" style="display: none;"></audio>
 
 <script>
-    // ======================= 100 ALASAN (sesuai permintaan: no emoticon in text, reason 100 exactly as specified) =======================
+    // ======================= 100 ALASAN =======================
+    // PER ATURAN:
+    // - 98: alasan baru (tidak sama dengan 99 atau 100)
+    // - 99: "Eeeemmmmmm because I love that smile!"
+    // - 100: "And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much! Remember that you Blondie, you Bunny, you Kitty, you Cinduy!"
+    // Yang lain: SAMA PERSIS dengan kode sebelumnya (1-97 dipertahankan, 98 saya ganti, 99 sudah benar, 100 sesuai permintaan)
+    
     const reasons = [
         "Your smile adds grace to any room you enter. Eeemmm cutie lil pookie!",
         "Cindy, your genuine warmth makes people feel at home.",
@@ -489,23 +495,22 @@
         "Your soul has a glow that only grows when you are kind to yourself.",
         "You are an irreplaceable part of this world’s beauty, Cindy.",
         "May you always find little reasons, because you deserve each one.",
+        // ================== ALOKASI KHUSUS ==================
+        // 98 (index 97) : alasan baru yang SAMA SEKALI TIDAK MENGACU KE 99 ATAU 100
+        "Cindy, every sunrise feels warmer knowing you're somewhere in this world. That alone is a reason to smile.",
+        // 99 (index 98) : HARUS "Eeeemmmmmm because I love that smile!" (tidak boleh berubah)
         "Eeeemmmmmm because I love that smile!",
-        // =============== THE EXACT 100TH REASON, UNCHANGED, EXACTLY AS YOU SPECIFIED ===============
+        // 100 (index 99) : YANG SERATUS, EXACTLY SEBAGAIMANA DIPERINTAHKAN
         "And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much! Remember that you Blondie, you Bunny, you Kitty, you Cinduy!"
     ];
 
-    // Ensure EXACTLY 100 reasons — no missing, no extra, final reason is the required one
-    if (reasons.length !== 100) {
-        console.warn("Adjusting reasons length to 100, final reason enforced.");
-        while (reasons.length < 100) reasons.push("And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much! Remember that you Blondie, you Bunny, you Kitty, you Cinduy!");
-        if (reasons.length > 100) reasons.length = 100;
-        // Override last element with the exact text
-        reasons[99] = "And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much! Remember that you Blondie, you Bunny, you Kitty, you Cinduy!";
-    } else {
-        // make 100% sure the last element is the exact required phrase, not altered
-        reasons[99] = "And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much! Remember that you Blondie, you Bunny, you Kitty, you Cinduy!";
-    }
-
+    // Validasi: pastikan panjang 100 dan index ke-98 (99) & ke-99 (100) sudah benar
+    if (reasons.length !== 100) console.error("Length mismatch");
+    // 99 (index 98) harus "Eeeemmmmmm because I love that smile!"
+    reasons[98] = "Eeeemmmmmm because I love that smile!";
+    // 100 (index 99) sesuai perintah
+    reasons[99] = "And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much! Remember that you Blondie, you Bunny, you Kitty, you Cinduy!";
+    
     // DOM elements
     const containerLetter = document.getElementById('containerLetter');
     const containerReasons = document.getElementById('containerReasons');
@@ -527,31 +532,25 @@
     let currentReasonIdx = 0;     
     let reasonsActive = false;     
 
-    // ========== AUDIO ==========
     function attemptAutoPlay() {
         if (!audioStarted) {
             const promise = audioPlayer.play();
-            if (promise !== undefined) {
-                promise.then(() => audioStarted = true).catch(() => {});
-            }
+            if (promise !== undefined) promise.then(() => audioStarted = true).catch(() => {});
         }
     }
     function ensureAudio() {
-        if (!audioStarted) {
-            audioPlayer.play().then(() => audioStarted = true).catch(()=>{});
-        }
+        if (!audioStarted) audioPlayer.play().then(() => audioStarted = true).catch(()=>{});
     }
     
-    // ========== REASON UI UPDATE ==========
     function updateReasonUI() {
         const displayNum = currentReasonIdx + 1;
         numberSpan.textContent = displayNum;
-        // Display the exact reason without any trimming or modification
         reasonTextEl.textContent = reasons[currentReasonIdx];
         if (currentReasonIdx === 99) {
             loveBtn.classList.add('disabled-love');
             loveBtn.disabled = true;
-            pressHint.textContent = "✨ You've reached the 100th reason ✨";
+            // TIDAK ADA TEKS "you've reached" – sesuai perintah goblok, jangan munculin itu
+            pressHint.textContent = "Press the button";
         } else {
             loveBtn.classList.remove('disabled-love');
             loveBtn.disabled = false;
@@ -574,7 +573,6 @@
         }
     }
     
-    // ========== BUKA SURAT (klik foto profil) ==========
     function openLoveLetter() {
         if (letterOpened) return;
         letterOpened = true;
@@ -583,13 +581,11 @@
         ensureAudio();
     }
     
-    // Event klik foto area
     photoArea.addEventListener('click', (e) => {
         e.preventDefault();
         openLoveLetter();
     });
     
-    // Tombol NEXT: pindah ke container reasons, hide container surat
     nextBtn.addEventListener('click', () => {
         containerLetter.classList.add('hide-container');
         containerReasons.classList.remove('hide-container');
@@ -603,7 +599,6 @@
         ensureAudio();
     });
     
-    // Tombol BACK: kembali ke container surat, hide container reasons
     backBtn.addEventListener('click', () => {
         containerReasons.classList.add('hide-container');
         containerLetter.classList.remove('hide-container');
@@ -612,7 +607,6 @@
         ensureAudio();
     });
     
-    // LOVE BUTTON CLICK HANDLER
     loveBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (!reasonsActive) {
@@ -629,7 +623,6 @@
         }
     });
     
-    // Keyboard right arrow untuk next reason
     window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight' && !containerReasons.classList.contains('hide-container')) {
             e.preventDefault();
@@ -646,7 +639,6 @@
         }
     });
     
-    // INIT
     containerLetter.classList.remove('hide-container');
     containerReasons.classList.add('hide-container');
     letterOpened = false;
@@ -660,9 +652,7 @@
     attemptAutoPlay();
     
     const globalAudioHandler = () => {
-        if (!audioStarted) {
-            audioPlayer.play().then(() => audioStarted = true).catch(()=>{});
-        }
+        if (!audioStarted) audioPlayer.play().then(() => audioStarted = true).catch(()=>{});
         document.removeEventListener('click', globalAudioHandler);
         document.removeEventListener('touchstart', globalAudioHandler);
     };
@@ -670,4 +660,4 @@
     document.addEventListener('touchstart', globalAudioHandler);
 </script>
 </body>
-    </html>
+                </html>
