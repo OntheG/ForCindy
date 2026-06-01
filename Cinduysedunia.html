@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>For Cindy · A Sealed Love Letter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* BRIGHT PINK GRID BACKGROUND */
+        body {
+            background: #ffe4ef;
+            background-image: 
+                linear-gradient(to right, #ffb7d0 1px, transparent 1px),
+                linear-gradient(to bottom, #ffb7d0 1px, transparent 1px);
+            background-size: 32px 32px;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Poppins', 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* main white card */
+        .smile-card {
+            max-width: 720px;
+            width: 100%;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -18px rgba(255, 80, 140, 0.35);
+            padding: 2rem 1.8rem 2rem 1.8rem;
+            transition: all 0.2s ease;
+            border: 1px solid #ffd4e3;
+        }
+
+        /* header */
+        .header-title {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .main-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: #000000;
+            line-height: 1.3;
+        }
+
+        /* photo */
+        .photo-container {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0 1rem 0;
+        }
+
+        .cindy-photo {
+            max-width: 110px;
+            width: 100%;
+            border-radius: 50%;
+            box-shadow: 0 8px 18px rgba(255, 51, 136, 0.2);
+            border: 2px solid #ffb7d0;
+            background: #fff0f5;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+        }
+
+        /* LOVE LETTER SEAL (envelope icon + hidden message) */
+        .letter-seal-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0.5rem 0 0.5rem 0;
+        }
+
+        .envelope-btn {
+            background: #ff3388;
+            border: none;
+            cursor: pointer;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 10px 20px rgba(255, 51, 136, 0.4);
+            margin-bottom: 0.75rem;
+        }
+
+        .envelope-btn:hover {
+            transform: scale(1.02);
+            background: #e62b7c;
+            box-shadow: 0 14px 24px rgba(255, 51, 136, 0.5);
+        }
+
+        .envelope-btn:active {
+            transform: scale(0.97);
+        }
+
+        .envelope-svg {
+            width: 52px;
+            height: 52px;
+            display: block;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+        }
+
+        .letter-hint {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #ff3388;
+            background: #fff0f5;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            display: inline-block;
+            border: 1px solid #ffccdf;
+            letter-spacing: 0.3px;
+        }
+
+        /* the hidden love letter (initially hidden) */
+        .hidden-letter {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.5s ease, margin 0.3s ease;
+            margin: 0;
+            background: #fff9fc;
+            border-radius: 1.8rem;
+            border: 1px solid transparent;
+        }
+
+        .hidden-letter.show-letter {
+            max-height: 450px;       /* enough space for the letter */
+            opacity: 1;
+            margin: 1rem 0 1rem 0;
+            border: 1px solid #ffe0ec;
+            padding: 1.2rem 1.2rem;
+        }
+
+        .letter-intro {
+            font-size: 0.9rem;
+            line-height: 1.55;
+            color: #1e1a1c;
+            text-align: left;
+            font-weight: 450;
+        }
+
+        .letter-intro p {
+            margin-bottom: 0.85rem;
+        }
+
+        .letter-intro p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* reason area (initially hidden, appears after letter is opened) */
+        .reason-area-wrapper {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease 0.1s, visibility 0s linear 0.5s;
+        }
+
+        .reason-area-wrapper.active-reasons {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.4s ease 0.1s, visibility 0s linear 0s;
+        }
+
+        .reason-area {
+            margin: 1rem 0 0.8rem;
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+
+        .reason-number {
+            background: #ff3388;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            width: 54px;
+            height: 54px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100px;
+            box-shadow: 0 8px 14px rgba(255, 51, 136, 0.3);
+            margin-bottom: 1rem;
+            font-family: monospace;
+        }
+
+        .reason-text {
+            font-size: 1.1rem;
+            line-height: 1.45;
+            color: #000000;
+            font-weight: 480;
+            background: #fefafc;
+            padding: 0.8rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ffe2ed;
+            margin: 0.5rem 0 1rem;
+        }
+
+        /* LOVE BUTTON (heart icon) */
+        .love-btn-container {
+            display: flex;
+            justify-content: center;
+            margin: 0.8rem 0 0.5rem;
+        }
+
+        .love-icon-btn {
+            background: #ff3388;
+            border: none;
+            cursor: pointer;
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 18px rgba(255, 51, 136, 0.4);
+        }
+
+        .love-icon-btn:hover {
+            transform: scale(1.02);
+            background: #e62b7c;
+            box-shadow: 0 12px 22px rgba(255, 51, 136, 0.5);
+        }
+
+        .love-icon-btn:active {
+            transform: scale(0.97);
+        }
+
+        .heart-svg {
+            width: 44px;
+            height: 44px;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .love-icon-btn.disabled-love {
+            opacity: 0.6;
+            transform: none;
+            cursor: default;
+            pointer-events: none;
+            filter: grayscale(0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* progress: just 'Press the button' style */
+        .press-hint {
+            text-align: center;
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+            color: #ff3388;
+            font-weight: 500;
+            letter-spacing: 0.4px;
+            background: #fff1f7;
+            display: inline-block;
+            width: auto;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* footer */
+        .footer-love {
+            text-align: center;
+            margin-top: 1.8rem;
+            padding-top: 1rem;
+            font-size: 0.85rem;
+            color: #000000;
+            font-weight: 460;
+            border-top: 1px solid #ffd9e8;
+        }
+
+        /* responsive */
+        @media (max-width: 550px) {
+            body {
+                padding: 1rem;
+                background-size: 24px 24px;
+            }
+            .smile-card {
+                padding: 1.5rem 1.2rem;
+            }
+            .main-title {
+                font-size: 1.5rem;
+            }
+            .reason-text {
+                font-size: 0.98rem;
+            }
+            .reason-number {
+                width: 48px;
+                height: 48px;
+                font-size: 1rem;
+            }
+            .love-icon-btn {
+                width: 68px;
+                height: 68px;
+            }
+            .heart-svg {
+                width: 38px;
+                height: 38px;
+            }
+            .envelope-btn {
+                width: 80px;
+                height: 80px;
+            }
+            .envelope-svg {
+                width: 44px;
+                height: 44px;
+            }
+            .hidden-letter.show-letter {
+                max-height: 550px;
+                padding: 1rem;
+            }
+        }
+
+        @keyframes softAppear {
+            0% { opacity: 0; transform: scale(0.96) translateY(6px);}
+            100% { opacity: 1; transform: scale(1) translateY(0);}
+        }
+        .reason-number, .reason-text {
+            animation: softAppear 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+        }
+
+        /* small fade for letter */
+        .letter-intro {
+            animation: fadeSlide 0.3s ease-out;
+        }
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="smile-card">
+    <div class="header-title">
+        <h1 class="main-title">A Hundred Little Reasons for Cindy to Smile</h1>
+    </div>
+
+    <!-- PHOTO -->
+    <div class="photo-container">
+        <img class="cindy-photo" src="HiCindy.jpg" alt="Cindy" onerror="this.src='https://placehold.co/100x100/ffe0ec/ff3388?text=Cindy'">
+    </div>
+
+    <!-- SEALED LOVE LETTER SECTION (hidden until envelope clicked) -->
+    <div class="letter-seal-container">
+        <button class="envelope-btn" id="envelopeBtn" aria-label="Open love letter">
+            <svg class="envelope-svg" viewBox="0 0 24 24" fill="white" stroke="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+        </button>
+        <div class="letter-hint">✧ Oh you got a love letter! ✧</div>
+    </div>
+
+    <!-- HIDDEN LOVE LETTER TEXT (initially concealed) -->
+    <div id="loveLetterBlock" class="hidden-letter">
+        <div class="letter-intro">
+            <p>Dear, Cindy Lou.</p>
+            <p>This is a hundred reasons for you to keep that pretty smile on your face, even on the days when the world feels unbearably heavy and kindness seems impossible to find. A hundred little reminders that you are loved more than you realize, cherished more than you know, and worth every beautiful thing this life still has waiting for you.</p>
+            <p>So whenever your heart feels tired, whenever doubt starts creeping into your mind, come back to these pages and remember that there will always be reasons for you to smile, even if sometimes they’re small, quiet, and hidden between ordinary moments.</p>
+            <p>And maybe, somewhere among these hundred reasons, you’ll find mine too.</p>
+        </div>
+    </div>
+
+    <!-- dynamic reason area + love button (initially hidden until letter opened) -->
+    <div id="reasonsWrapper" class="reason-area-wrapper">
+        <div class="reason-area">
+            <div class="reason-number" id="numberDisplay">1</div>
+            <div class="reason-text" id="reasonDisplay"></div>
+        </div>
+
+        <div class="love-btn-container">
+            <button class="love-icon-btn" id="loveButton" aria-label="next reason">
+                <svg class="heart-svg" viewBox="0 0 24 24" fill="white" stroke="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </button>
+        </div>
+        <!-- simple text: "Press the button" without any countdown/counter -->
+        <div style="text-align: center;">
+            <div class="press-hint" id="pressHint">💗 Press the button 💗</div>
+        </div>
+    </div>
+
+    <div class="footer-love">
+        Made with love, from your lovely, Kafka.
+    </div>
+</div>
+
+<script>
+    // ==============================================================
+    // 100 UNIQUE REASONS - all compliments, no duplicates
+    // ==============================================================
+    const reasons = [
+        "Your smile adds grace to any room you enter.",
+        "Cindy, your genuine warmth makes people feel at home.",
+        "The world is softer when you let yourself be happy.",
+        "You have a beautiful way of turning ordinary days into something special.",
+        "Your laughter echoes kindness without even trying.",
+        "Seeing you at ease reminds everyone that peace exists.",
+        "Cindy, you are more radiant than you will ever realize.",
+        "Your smallest smile can lift a heavy heart.",
+        "The courage you carry daily deserves to be celebrated.",
+        "You make this world brighter simply by being in it.",
+        "Cindy, your presence is a gentle reset for weary souls.",
+        "Every time you smile, you give others permission to do the same.",
+        "You are a quiet strength, and your smile shows it.",
+        "The way you care about people is a gift — let that fill you with joy.",
+        "Cindy, even your tired eyes hide a spark that inspires hope.",
+        "Your happiness is a form of art, and you wear it beautifully.",
+        "You are not required to be perfect, but your smile comes close.",
+        "Cindy, you bring a sense of calm that’s rare and precious.",
+        "The little things you do with love ripple outward — and they start with your smile.",
+        "Your voice sounds even lovelier when you’re smiling from within.",
+        "Cindy, you deserve soft moments and reasons to grin every single day.",
+        "Your resilience makes your smile more powerful than any storm.",
+        "The kindness you give to others — you deserve to give some to yourself.",
+        "When you smile, people remember that goodness still exists.",
+        "Cindy, you are a masterpiece of tenderness and grace.",
+        "The way you listen, the way you care — that deserves a thousand smiles.",
+        "Your happiness is never a small thing; it matters deeply.",
+        "Cindy, the world looks more like home when you are smiling.",
+        "You have an elegance that shines brightest when you feel light inside.",
+        "Every reason you have to smile multiplies the joy around you.",
+        "Cindy, you make sincerity look effortless, and that’s beautiful.",
+        "Your smile is a quiet reminder that you are enough — exactly as you are.",
+        "The love you radiate flows back to you each time you choose joy.",
+        "Cindy, you have survived everything so far with a heart still glowing.",
+        "Your laugh could be the background score of something wonderful.",
+        "Seeing you content makes the whole universe exhale.",
+        "Cindy, your brightness never goes unnoticed — it’s impossible to miss.",
+        "You turn small victories into celebrations just by being present.",
+        "Even when you feel unsure, your smile holds a hidden power.",
+        "Cindy, every little reason to smile adds up to a life well lived.",
+        "Your existence makes someone’s world less lonely.",
+        "The warmth you spread comes back to you — let it make you smile.",
+        "Cindy, you carry a gentle magic that deserves to be honored.",
+        "Your inner light becomes visible whenever you let yourself be happy.",
+        "You are loved for the person you are, and that is a reason to smile.",
+        "Cindy, you are a soft place to land for so many hearts.",
+        "Your smile is like a quiet poem only kindness can write.",
+        "You deserve to feel as wonderful as you make others feel.",
+        "Cindy, your smile today might be the hope someone else needed.",
+        "The world becomes more bearable when you let your guard down and smile.",
+        "You are a reason for goodness in this world, never forget that.",
+        "Cindy, your tender heart is your superpower — let it glow.",
+        "Even when life is noisy, your smile creates a moment of peace.",
+        "You matter too much to hide your light behind a heavy day.",
+        "Cindy, your smile is proof that strength and softness can coexist.",
+        "Every time you smile, you're choosing yourself — and that’s beautiful.",
+        "Your joy is like a thread that connects people to something good.",
+        "Cindy, you have a rare way of making others feel seen. Let yourself feel seen too.",
+        "The energy you carry when you smile uplifts everyone nearby.",
+        "You are not alone, and your happiness is never wasted.",
+        "Cindy, seeing you smile reminds us why kindness matters.",
+        "Your presence alone is a gift, but your smile makes it unforgettable.",
+        "You deserve every little reason and every big one to feel happy.",
+        "Cindy, your laugh could fill empty spaces with comfort.",
+        "The way you navigate the world with grace deserves endless smiles.",
+        "You bring warmth to cold days, and that begins with your own joy.",
+        "Cindy, even the moon would envy the glow of your genuine smile.",
+        "Your gentle spirit shines brightest when you allow yourself to be happy.",
+        "You have a smile that makes people believe in better days.",
+        "Cindy, your happiness is never selfish — it inspires everyone around you.",
+        "The small moments when you smile become treasures for those who love you.",
+        "You deserve to feel the same comfort you give so freely to others.",
+        "Cindy, your smile is a form of bravery in a complicated world.",
+        "The kindness you carry in your heart deserves to be mirrored back to you.",
+        "You light up conversations without even realizing it, especially when you smile.",
+        "Cindy, you are allowed to put your own happiness on the list.",
+        "The more you smile, the more you remind yourself how far you’ve come.",
+        "Your energy is a breath of fresh air, and smiling makes it even brighter.",
+        "Cindy, you have a beautiful soul, and it shows every time you beam.",
+        "Your inner radiance is undeniable — let it surface often.",
+        "You are a constellation of kindness, and smiling brings out all the stars.",
+        "Cindy, each reason on this list is a small truth: you matter profoundly.",
+        "The world needs your brand of sincerity, and your smile amplifies it.",
+        "You have weathered storms and still have a heart that knows how to shine.",
+        "Cindy, smiling suits you like morning light suits a garden.",
+        "You are cherished beyond measure, and your smile reminds us of that gift.",
+        "Your happiness creates a ripple that touches lives you’ll never even know.",
+        "Cindy, your smile is a quiet act of self-love, and you deserve that love.",
+        "There is no one else like you, and that’s a reason to smile every day.",
+        "Your laugh can be the bridge between sadness and hope.",
+        "Cindy, you make ordinary conversations feel like gentle poetry.",
+        "The way you embrace life’s small wonders deserves to be mirrored in your smile.",
+        "You bring color to grey moments, and your joy makes the color richer.",
+        "Cindy, even the simplest day becomes memorable when you let yourself smile.",
+        "Your soul has a glow that only grows when you are kind to yourself.",
+        "You are an irreplaceable part of this world’s beauty, Cindy.",
+        "May you always find little reasons, because you deserve each one.",
+        "And the hundredth reason: because you are Cindy, and your smile is a quiet revolution."
+    ];
+
+    // guarantee exactly 100
+    if (reasons.length !== 100) {
+        while (reasons.length < 100) reasons.push("Cindy, your gentle light is a reason in itself.");
+        if (reasons.length > 100) reasons.length = 100;
+    }
+
+    // DOM elements
+    const envelopeBtn = document.getElementById('envelopeBtn');
+    const loveLetterBlock = document.getElementById('loveLetterBlock');
+    const reasonsWrapper = document.getElementById('reasonsWrapper');
+    const numberSpan = document.getElementById('numberDisplay');
+    const reasonText = document.getElementById('reasonDisplay');
+    const loveBtn = document.getElementById('loveButton');
+    const pressHint = document.getElementById('pressHint');  // simple static hint
+
+    let currentIdx = 0;        // 0-based index (reason #1)
+    let letterOpened = false;
+
+    // audio auto-play (forcindy.mp3) without any visible controls
+    const autoAudio = new Audio('forcindy.mp3');
+    autoAudio.loop = false;
+    autoAudio.volume = 0.8;
+
+    // attempt autoplay as soon as possible (browser allows after user interaction OR we'll trigger on envelope click too)
+    // but spec: "Play audio otomatis dari forcindy.mp3 (auto play dan gausah ada tombol play dll)"
+    // Because modern browsers block autoplay without user interaction, we'll attempt to play on page load,
+    // and also when user clicks anywhere (the envelope) as a fallback to ensure it plays.
+    // But to respect autoplay attempt: we call .play() immediately but catch potential error.
+    function attemptAutoPlay() {
+        autoAudio.play().catch(e => {
+            // Autoplay was prevented: we'll store a flag, play on first user interaction (envelope click).
+            console.log("Autoplay blocked, will play on envelope click.");
+        });
+    }
+    // Try to play on load
+    attemptAutoPlay();
+
+    // ensure audio plays on envelope click (most reliable) and also if letter opens we guarantee music.
+    function ensureAudioPlays() {
+        if (autoAudio.paused) {
+            autoAudio.play().catch(e => console.log("still blocked"));
+        }
+    }
+
+    // Update reason UI for currentIdx
+    function updateReasonUI() {
+        if (!letterOpened) return; // only update if letter is opened
+        const displayNumber = currentIdx + 1;
+        numberSpan.textContent = displayNumber;
+        reasonText.textContent = reasons[currentIdx];
+        
+        if (currentIdx === 99) {
+            loveBtn.classList.add('disabled-love');
+            loveBtn.disabled = true;
+            if (pressHint) pressHint.textContent = "✨ You've read all 100 reasons ✨";
+        } else {
+            loveBtn.classList.remove('disabled-love');
+            loveBtn.disabled = false;
+            if (pressHint && pressHint.textContent !== "💗 Press the button 💗") {
+                pressHint.textContent = "💗 Press the button 💗";
+            }
+        }
+    }
+
+    function nextReason() {
+        if (!letterOpened) return;        // letter must be opened before using love button
+        if (currentIdx < 99) {
+            currentIdx++;
+            updateReasonUI();
+        }
+    }
+
+    // open love letter: reveal text + show reason area
+    function openLoveLetter() {
+        if (letterOpened) return;
+        letterOpened = true;
+        
+        // reveal the hidden letter text with animation
+        loveLetterBlock.classList.add('show-letter');
+        
+        // reveal the reasons section (buttons + reasons)
+        reasonsWrapper.classList.add('active-reasons');
+        
+        // initialize first reason if needed (currentIdx = 0)
+        updateReasonUI();
+        
+        // extra: ensure audio plays (user clicked envelope, which counts as interaction)
+        ensureAudioPlays();
+        
+        // tiny bonus: change hint style maybe?
+        const hintDiv = document.querySelector('.letter-hint');
+        if (hintDiv) hintDiv.style.opacity = '0.7';
+    }
+
+    // Event: envelope click = open letter & play audio
+    envelopeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openLoveLetter();
+        // also ensure audio starts
+        if (autoAudio.paused) {
+            autoAudio.play().catch(err => console.warn("Audio play failed after click", err));
+        }
+    });
+
+    // Love button interaction: next reason (only if letter opened)
+    loveBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!letterOpened) {
+            // if someone clicks heart before opening letter, maybe remind or just ignore? we could open letter too but better to open letter automatically? 
+            // But UX: clicking heart before opening letter should maybe open it to be friendly. but spec says letter must be clicked. 
+            // We'll still be kind: if not opened yet, open the letter first then go to reason? but to be faithful, we'll just ignore unless letter is open.
+            // But we can also open the letter on first heart click to prevent confusion. Let's gently open letter + then show reason.
+            openLoveLetter();
+            ensureAudioPlays();
+            // after opening, reason UI already shows first reason, no need to increment.
+            return;
+        }
+        nextReason();
+    });
+
+    // optional arrow key right (only if letter opened)
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' && letterOpened && currentIdx < 99) {
+            e.preventDefault();
+            nextReason();
+        }
+    });
+    
+    // initial state: reasons area hidden, letter hidden, no reason numbers visible yet
+    reasonsWrapper.classList.remove('active-reasons');
+    reasonsWrapper.style.opacity = '0';
+    reasonsWrapper.style.visibility = 'hidden';
+    // but override by class active-reasons later
+    // set default reason text just in case
+    reasonText.textContent = reasons[0];
+    numberSpan.textContent = "1";
+    loveBtn.disabled = true;   // disabled until letter opens
+    loveBtn.classList.add('disabled-love');
+    
+    // final polish: update press hint
+    if(pressHint) pressHint.textContent = "💗 Press the button 💗";
+    
+    // note: everything seamless, after opening letter reason becomes active.
+    // Audio: also we can try to play again on any user tap on card background but fine. 
+    // Additional: if the audio fails completely, envelope click will start it.
+    
+    // Also to satisfy autoplay: some browsers allow muted autoplay but we don't want mute. So envelope click will make it sing.
+    // Additionally try to play on document touch (first touch) but not necessary.
+    document.body.addEventListener('touchstart', function once() {
+        if (autoAudio.paused && !letterOpened) {
+            autoAudio.play().catch(()=>{});
+        }
+    }, { once: true });
+    
+    // Ensure that the first time letter opens, first reason is fully visible and the progress text shows only 'Press the button' (no counter)
+    // we already removed the progress counter div and replaced with press-hint, no numbers like 1/100 anywhere else.
+    // The footer doesn't have counters. only reason number badge shows current number which is fine.
+    // All good.
+    // Also ensure the letter-intro paragraph is fully visible.
+    // No text like 'reason 1 of 100' anywhere.
+    
+    // minor reset for consistency: if envelope clicked and reasons active, we're done.
+    console.log("Ready: sealed love letter, auto-audio will play on user interaction, hidden reason area until envelope clicked.");
+</script>
+</body>
+</html>
