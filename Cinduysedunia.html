@@ -390,7 +390,7 @@
 <audio id="bgAudio" src="forcindy.mp3" loop preload="auto" style="display: none;"></audio>
 
 <script>
-    // ======================= 100 ALASAN (tanpa emoticon di dalam teks) =======================
+    // ======================= 100 ALASAN (sesuai permintaan: no emoticon in text, reason 100 exactly as specified) =======================
     const reasons = [
         "Your smile adds grace to any room you enter. Eeemmm cutie lil pookie!",
         "Cindy, your genuine warmth makes people feel at home.",
@@ -489,13 +489,21 @@
         "Your soul has a glow that only grows when you are kind to yourself.",
         "You are an irreplaceable part of this world’s beauty, Cindy.",
         "May you always find little reasons, because you deserve each one.",
-        "Eeeemmmmmm because I love that smile!"
+        "Eeeemmmmmm because I love that smile!",
+        // =============== THE EXACT 100TH REASON, UNCHANGED, EXACTLY AS YOU SPECIFIED ===============
+        "And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much! Remember that you Blondie, you Bunny, you Kitty, you Cinduy!"
     ];
 
-    // Pastikan 100
+    // Ensure EXACTLY 100 reasons — no missing, no extra, final reason is the required one
     if (reasons.length !== 100) {
+        console.warn("Adjusting reasons length to 100, final reason enforced.");
         while (reasons.length < 100) reasons.push("And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much! Remember that you Blondie, you Bunny, you Kitty, you Cinduy!");
         if (reasons.length > 100) reasons.length = 100;
+        // Override last element with the exact text
+        reasons[99] = "And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much! Remember that you Blondie, you Bunny, you Kitty, you Cinduy!";
+    } else {
+        // make 100% sure the last element is the exact required phrase, not altered
+        reasons[99] = "And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much! Remember that you Blondie, you Bunny, you Kitty, you Cinduy!";
     }
 
     // DOM elements
@@ -538,15 +546,17 @@
     function updateReasonUI() {
         const displayNum = currentReasonIdx + 1;
         numberSpan.textContent = displayNum;
+        // Display the exact reason without any trimming or modification
         reasonTextEl.textContent = reasons[currentReasonIdx];
         if (currentReasonIdx === 99) {
             loveBtn.classList.add('disabled-love');
             loveBtn.disabled = true;
+            pressHint.textContent = "✨ You've reached the 100th reason ✨";
         } else {
             loveBtn.classList.remove('disabled-love');
             loveBtn.disabled = false;
+            pressHint.textContent = "Press the button";
         }
-        pressHint.textContent = "Press the button";
     }
     
     function nextReason() {
@@ -585,7 +595,6 @@
         containerReasons.classList.remove('hide-container');
         reasonsActive = false;
         currentReasonIdx = 0;
-        // Set placeholder tanpa emoticon
         reasonTextEl.textContent = "Tap the heart to see reason number one";
         numberSpan.textContent = "?";
         pressHint.textContent = "Press the button";
