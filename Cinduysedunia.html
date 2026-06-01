@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>For Cindy · A Sealed Love Letter</title>
+    <title>For Cindy · 100 Reasons to Smile</title>
     <style>
         * {
             margin: 0;
@@ -37,139 +37,129 @@
             padding: 2rem 1.8rem 2rem 1.8rem;
             transition: all 0.2s ease;
             border: 1px solid #ffd4e3;
+            position: relative;
         }
 
-        /* header */
-        .header-title {
+        /* ========= CONTAINER 1: LOVE LETTER SECTION ========= */
+        .container-letter {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .container-letter.hide-container {
+            display: none;
+        }
+
+        /* header di container surat tetap hitam */
+        .main-header {
             text-align: center;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
-
-        .main-title {
-            font-size: 1.9rem;
-            font-weight: 700;
+        .love-letter-headline {
+            font-size: 2rem;
+            font-weight: 800;
             letter-spacing: -0.01em;
             color: #000000;
-            line-height: 1.3;
+            line-height: 1.2;
         }
 
-        /* photo */
-        .photo-container {
-            display: flex;
-            justify-content: center;
-            margin: 1rem 0 1rem 0;
-        }
-
-        .cindy-photo {
-            max-width: 110px;
-            width: 100%;
-            border-radius: 50%;
-            box-shadow: 0 8px 18px rgba(255, 51, 136, 0.2);
-            border: 2px solid #ffb7d0;
-            background: #fff0f5;
-            object-fit: cover;
-            aspect-ratio: 1 / 1;
-        }
-
-        /* LOVE LETTER SEAL (envelope icon + hidden message) */
-        .letter-seal-container {
+        .photo-click-area {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0.5rem 0 0.5rem 0;
-        }
-
-        .envelope-btn {
-            background: #ff3388;
-            border: none;
-            cursor: pointer;
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
-            box-shadow: 0 10px 20px rgba(255, 51, 136, 0.4);
-            margin-bottom: 0.75rem;
+            margin: 1rem 0 0.5rem;
+            cursor: pointer;
         }
-
-        .envelope-btn:hover {
-            transform: scale(1.02);
-            background: #e62b7c;
-            box-shadow: 0 14px 24px rgba(255, 51, 136, 0.5);
-        }
-
-        .envelope-btn:active {
-            transform: scale(0.97);
-        }
-
-        .envelope-svg {
-            width: 52px;
-            height: 52px;
-            display: block;
-            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
-        }
-
-        .letter-hint {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #ff3388;
+        .cindy-photo {
+            max-width: 120px;
+            width: 100%;
+            border-radius: 50%;
+            box-shadow: 0 8px 18px rgba(255, 51, 136, 0.25);
+            border: 3px solid #ffb7d0;
             background: #fff0f5;
-            padding: 0.3rem 1rem;
-            border-radius: 60px;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+        .cindy-photo:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px rgba(255, 51, 136, 0.35);
+            border-color: #ff88aa;
+        }
+        .click-hint {
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #000000;
+            font-weight: 450;
+            background: #fff0f5;
+            padding: 4px 12px;
+            border-radius: 30px;
             display: inline-block;
-            border: 1px solid #ffccdf;
             letter-spacing: 0.3px;
-        }
-
-        /* the hidden love letter (initially hidden) */
-        .hidden-letter {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.5s ease, margin 0.3s ease;
-            margin: 0;
-            background: #fff9fc;
-            border-radius: 1.8rem;
-            border: 1px solid transparent;
-        }
-
-        .hidden-letter.show-letter {
-            max-height: 450px;       /* enough space for the letter */
-            opacity: 1;
-            margin: 1rem 0 1rem 0;
-            border: 1px solid #ffe0ec;
-            padding: 1.2rem 1.2rem;
+            border: 1px solid #ffd4e3;
         }
 
         .letter-intro {
-            font-size: 0.9rem;
+            background: #fff9fc;
+            padding: 1.4rem 1.4rem;
+            border-radius: 1.8rem;
+            margin: 1rem 0 1.5rem;
+            border: 1px solid #ffe0ec;
+            font-size: 0.92rem;
             line-height: 1.55;
             color: #1e1a1c;
             text-align: left;
             font-weight: 450;
         }
-
         .letter-intro p {
             margin-bottom: 0.85rem;
         }
-
         .letter-intro p:last-child {
             margin-bottom: 0;
         }
 
-        /* reason area (initially hidden, appears after letter is opened) */
-        .reason-area-wrapper {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease 0.1s, visibility 0s linear 0.5s;
+        .next-btn-container {
+            display: flex;
+            justify-content: center;
+            margin: 0.5rem 0 0.5rem;
+        }
+        .next-btn {
+            background: #ff3388;
+            color: white;
+            border: none;
+            padding: 0.7rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(255, 51, 136, 0.3);
+            font-family: inherit;
+        }
+        .next-btn:hover {
+            background: #e62b7c;
+            transform: scale(1.02);
         }
 
-        .reason-area-wrapper.active-reasons {
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.4s ease 0.1s, visibility 0s linear 0s;
+        /* ========= CONTAINER 2: HUNDRED REASONS SECTION ========= */
+        .container-reasons {
+            transition: opacity 0.3s ease;
+        }
+        .container-reasons.hide-container {
+            display: none;
+        }
+
+        /* header di container reasons: "A Hundred Little Reasons for Cindy to Smile" sebagai header utama */
+        .reasons-main-header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+        .reasons-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            color: #000000;
+            line-height: 1.3;
         }
 
         .reason-area {
@@ -177,7 +167,6 @@
             text-align: center;
             padding: 0.5rem 0;
         }
-
         .reason-number {
             background: #ff3388;
             color: white;
@@ -193,7 +182,6 @@
             margin-bottom: 1rem;
             font-family: monospace;
         }
-
         .reason-text {
             font-size: 1.1rem;
             line-height: 1.45;
@@ -206,13 +194,11 @@
             margin: 0.5rem 0 1rem;
         }
 
-        /* LOVE BUTTON (heart icon) */
         .love-btn-container {
             display: flex;
             justify-content: center;
-            margin: 0.8rem 0 0.5rem;
+            margin: 1rem 0 0.5rem;
         }
-
         .love-icon-btn {
             background: #ff3388;
             border: none;
@@ -226,51 +212,67 @@
             transition: all 0.2s ease;
             box-shadow: 0 8px 18px rgba(255, 51, 136, 0.4);
         }
-
         .love-icon-btn:hover {
             transform: scale(1.02);
             background: #e62b7c;
-            box-shadow: 0 12px 22px rgba(255, 51, 136, 0.5);
         }
-
         .love-icon-btn:active {
             transform: scale(0.97);
         }
-
         .heart-svg {
             width: 44px;
             height: 44px;
             display: block;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
-
         .love-icon-btn.disabled-love {
             opacity: 0.6;
             transform: none;
             cursor: default;
             pointer-events: none;
             filter: grayscale(0.05);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* progress: just 'Press the button' style */
         .press-hint {
             text-align: center;
             margin-top: 0.8rem;
             font-size: 0.85rem;
-            color: #ff3388;
             font-weight: 500;
-            letter-spacing: 0.4px;
-            background: #fff1f7;
+            color: #d45a82;
+            background: #fff2f7;
             display: inline-block;
             width: auto;
-            padding: 0.3rem 1.2rem;
-            border-radius: 40px;
+            padding: 0.4rem 1rem;
+            border-radius: 60px;
             margin-left: auto;
             margin-right: auto;
         }
+        .progress-wrapper {
+            text-align: center;
+        }
 
-        /* footer */
+        .back-btn-container {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0 0.2rem;
+        }
+        .back-btn {
+            background: transparent;
+            border: 1.5px solid #ffb7d0;
+            color: #ff3388;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        .back-btn:hover {
+            background: #ffe4ef;
+            border-color: #ff3388;
+        }
+
         .footer-love {
             text-align: center;
             margin-top: 1.8rem;
@@ -281,7 +283,6 @@
             border-top: 1px solid #ffd9e8;
         }
 
-        /* responsive */
         @media (max-width: 550px) {
             body {
                 padding: 1rem;
@@ -290,16 +291,14 @@
             .smile-card {
                 padding: 1.5rem 1.2rem;
             }
-            .main-title {
+            .love-letter-headline {
                 font-size: 1.5rem;
+            }
+            .reasons-title {
+                font-size: 1.4rem;
             }
             .reason-text {
                 font-size: 0.98rem;
-            }
-            .reason-number {
-                width: 48px;
-                height: 48px;
-                font-size: 1rem;
             }
             .love-icon-btn {
                 width: 68px;
@@ -309,17 +308,8 @@
                 width: 38px;
                 height: 38px;
             }
-            .envelope-btn {
-                width: 80px;
-                height: 80px;
-            }
-            .envelope-svg {
-                width: 44px;
-                height: 44px;
-            }
-            .hidden-letter.show-letter {
-                max-height: 550px;
-                padding: 1rem;
+            .cindy-photo {
+                max-width: 100px;
             }
         }
 
@@ -330,56 +320,44 @@
         .reason-number, .reason-text {
             animation: softAppear 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
         }
-
-        /* small fade for letter */
-        .letter-intro {
-            animation: fadeSlide 0.3s ease-out;
-        }
-        @keyframes fadeSlide {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
     </style>
 </head>
 <body>
 <div class="smile-card">
-    <div class="header-title">
-        <h1 class="main-title">A Hundred Little Reasons for Cindy to Smile</h1>
-    </div>
+    <!-- ================= CONTAINER 1: LOVE LETTER (surat) ================= -->
+    <div id="containerLetter" class="container-letter">
+        <!-- Header hitam -->
+        <div class="main-header">
+            <h1 class="love-letter-headline">CINDY, YOU GOT A LOVE LETTER!</h1>
+        </div>
 
-    <!-- PHOTO -->
-    <div class="photo-container">
-        <img class="cindy-photo" src="HiCindy.jpg" alt="Cindy" onerror="this.src='https://placehold.co/100x100/ffe0ec/ff3388?text=Cindy'">
-    </div>
+        <!-- Foto profil bisa diklik + teks "Click here" (tanpa emoticon) -->
+        <div class="photo-click-area" id="photoClickArea">
+            <img class="cindy-photo" src="HiCindy.jpg" alt="Cindy" id="cindyProfileImg" onerror="this.src='https://placehold.co/120x120/ffe0ec/ff3388?text=Cindy'">
+            <span class="click-hint">Click here</span>
+        </div>
 
-    <!-- SEALED LOVE LETTER SECTION (hidden until envelope clicked) -->
-    <div class="letter-seal-container">
-        <button class="envelope-btn" id="envelopeBtn" aria-label="Open love letter">
-            <svg class="envelope-svg" viewBox="0 0 24 24" fill="white" stroke="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-            </svg>
-        </button>
-        <div class="letter-hint">✧ Oh you got a love letter! ✧</div>
-    </div>
-
-    <!-- HIDDEN LOVE LETTER TEXT (initially concealed) -->
-    <div id="loveLetterBlock" class="hidden-letter">
-        <div class="letter-intro">
+        <!-- Love letter text (tersembunyi sampai klik foto) -->
+        <div id="loveLetterText" class="letter-intro" style="display: none;">
             <p>Dear, Cindy Lou.</p>
             <p>This is a hundred reasons for you to keep that pretty smile on your face, even on the days when the world feels unbearably heavy and kindness seems impossible to find. A hundred little reminders that you are loved more than you realize, cherished more than you know, and worth every beautiful thing this life still has waiting for you.</p>
-            <p>So whenever your heart feels tired, whenever doubt starts creeping into your mind, come back to these pages and remember that there will always be reasons for you to smile, even if sometimes they’re small, quiet, and hidden between ordinary moments.</p>
-            <p>And maybe, somewhere among these hundred reasons, you’ll find mine too.</p>
+            <p>So whenever your heart feels tired, whenever doubt starts creeping into your mind, come back to these pages and remember that there will always be reasons for you to smile, even if sometimes they're small, quiet, and hidden between ordinary moments.</p>
+            <p>And maybe, somewhere among these hundred reasons, you'll find mine too.</p>
+        </div>
+
+        <!-- Tombol NEXT (pindah ke container reasons, akan muncul setelah surat dibuka) -->
+        <div id="nextBtnWrapper" style="display: flex; justify-content: center; margin-top: 0.2rem;">
+            <button id="nextToReasonsBtn" class="next-btn" style="display: none;">Next</button>
         </div>
     </div>
 
-    <!-- dynamic reason area + love button (initially hidden until letter opened) -->
-    <div id="reasonsWrapper" class="reason-area-wrapper">
+    <!-- ================= CONTAINER 2: A HUNDRED REASONS ================= -->
+    <div id="containerReasons" class="container-reasons hide-container">
+        <!-- Header baru: A Hundred Little Reasons for Cindy to Smile (bukan sub header, sebagai judul utama) -->
+        <div class="reasons-main-header">
+            <h1 class="reasons-title">A Hundred Little Reasons for Cindy to Smile</h1>
+        </div>
+
         <div class="reason-area">
             <div class="reason-number" id="numberDisplay">1</div>
             <div class="reason-text" id="reasonDisplay"></div>
@@ -392,9 +370,14 @@
                 </svg>
             </button>
         </div>
-        <!-- simple text: "Press the button" without any countdown/counter -->
-        <div style="text-align: center;">
-            <div class="press-hint" id="pressHint">💗 Press the button 💗</div>
+        
+        <div class="progress-wrapper">
+            <div class="press-hint" id="pressHint">Press the button</div>
+        </div>
+
+        <!-- Tombol BACK untuk kembali ke container surat -->
+        <div class="back-btn-container">
+            <button id="backToLetterBtn" class="back-btn">Back to Love Letter</button>
         </div>
     </div>
 
@@ -403,10 +386,11 @@
     </div>
 </div>
 
+<!-- AUDIO: auto-play, loop -->
+<audio id="bgAudio" src="forcindy.mp3" loop preload="auto" style="display: none;"></audio>
+
 <script>
-    // ==============================================================
-    // 100 UNIQUE REASONS - all compliments, no duplicates
-    // ==============================================================
+    // ======================= 100 ALASAN (tanpa emoticon di dalam teks) =======================
     const reasons = [
         "Your smile adds grace to any room you enter.",
         "Cindy, your genuine warmth makes people feel at home.",
@@ -505,172 +489,176 @@
         "Your soul has a glow that only grows when you are kind to yourself.",
         "You are an irreplaceable part of this world’s beauty, Cindy.",
         "May you always find little reasons, because you deserve each one.",
-        "And the hundredth reason: because you are Cindy, and your smile is a quiet revolution."
+        "And the hundredth reason, because you are Cindy, and I Love You So Damn Fucking Much."
     ];
 
-    // guarantee exactly 100
+    // Pastikan 100
     if (reasons.length !== 100) {
         while (reasons.length < 100) reasons.push("Cindy, your gentle light is a reason in itself.");
         if (reasons.length > 100) reasons.length = 100;
     }
 
     // DOM elements
-    const envelopeBtn = document.getElementById('envelopeBtn');
-    const loveLetterBlock = document.getElementById('loveLetterBlock');
-    const reasonsWrapper = document.getElementById('reasonsWrapper');
+    const containerLetter = document.getElementById('containerLetter');
+    const containerReasons = document.getElementById('containerReasons');
+    const loveLetterTextDiv = document.getElementById('loveLetterText');
+    const nextBtn = document.getElementById('nextToReasonsBtn');
+    const backBtn = document.getElementById('backToLetterBtn');
+    const photoArea = document.getElementById('photoClickArea');
+    
+    // Reason elements
     const numberSpan = document.getElementById('numberDisplay');
-    const reasonText = document.getElementById('reasonDisplay');
+    const reasonTextEl = document.getElementById('reasonDisplay');
     const loveBtn = document.getElementById('loveButton');
-    const pressHint = document.getElementById('pressHint');  // simple static hint
+    const pressHint = document.getElementById('pressHint');
+    
+    // Audio
+    const audioPlayer = document.getElementById('bgAudio');
+    let audioStarted = false;
+    let letterOpened = false;     
+    let currentReasonIdx = 0;     
+    let reasonsActive = false;     
 
-    let currentIdx = 0;        // 0-based index (reason #1)
-    let letterOpened = false;
-
-    // audio auto-play (forcindy.mp3) without any visible controls
-    const autoAudio = new Audio('forcindy.mp3');
-    autoAudio.loop = false;
-    autoAudio.volume = 0.8;
-
-    // attempt autoplay as soon as possible (browser allows after user interaction OR we'll trigger on envelope click too)
-    // but spec: "Play audio otomatis dari forcindy.mp3 (auto play dan gausah ada tombol play dll)"
-    // Because modern browsers block autoplay without user interaction, we'll attempt to play on page load,
-    // and also when user clicks anywhere (the envelope) as a fallback to ensure it plays.
-    // But to respect autoplay attempt: we call .play() immediately but catch potential error.
+    // ========== AUDIO ==========
     function attemptAutoPlay() {
-        autoAudio.play().catch(e => {
-            // Autoplay was prevented: we'll store a flag, play on first user interaction (envelope click).
-            console.log("Autoplay blocked, will play on envelope click.");
-        });
-    }
-    // Try to play on load
-    attemptAutoPlay();
-
-    // ensure audio plays on envelope click (most reliable) and also if letter opens we guarantee music.
-    function ensureAudioPlays() {
-        if (autoAudio.paused) {
-            autoAudio.play().catch(e => console.log("still blocked"));
-        }
-    }
-
-    // Update reason UI for currentIdx
-    function updateReasonUI() {
-        if (!letterOpened) return; // only update if letter is opened
-        const displayNumber = currentIdx + 1;
-        numberSpan.textContent = displayNumber;
-        reasonText.textContent = reasons[currentIdx];
-        
-        if (currentIdx === 99) {
-            loveBtn.classList.add('disabled-love');
-            loveBtn.disabled = true;
-            if (pressHint) pressHint.textContent = "✨ You've read all 100 reasons ✨";
-        } else {
-            loveBtn.classList.remove('disabled-love');
-            loveBtn.disabled = false;
-            if (pressHint && pressHint.textContent !== "💗 Press the button 💗") {
-                pressHint.textContent = "💗 Press the button 💗";
+        if (!audioStarted) {
+            const promise = audioPlayer.play();
+            if (promise !== undefined) {
+                promise.then(() => audioStarted = true).catch(() => {});
             }
         }
     }
-
-    function nextReason() {
-        if (!letterOpened) return;        // letter must be opened before using love button
-        if (currentIdx < 99) {
-            currentIdx++;
-            updateReasonUI();
+    function ensureAudio() {
+        if (!audioStarted) {
+            audioPlayer.play().then(() => audioStarted = true).catch(()=>{});
         }
     }
-
-    // open love letter: reveal text + show reason area
+    
+    // ========== REASON UI UPDATE ==========
+    function updateReasonUI() {
+        const displayNum = currentReasonIdx + 1;
+        numberSpan.textContent = displayNum;
+        reasonTextEl.textContent = reasons[currentReasonIdx];
+        if (currentReasonIdx === 99) {
+            loveBtn.classList.add('disabled-love');
+            loveBtn.disabled = true;
+        } else {
+            loveBtn.classList.remove('disabled-love');
+            loveBtn.disabled = false;
+        }
+        pressHint.textContent = "Press the button";
+    }
+    
+    function nextReason() {
+        if (!reasonsActive) {
+            reasonsActive = true;
+            currentReasonIdx = 0;
+            updateReasonUI();
+            ensureAudio();
+            return;
+        }
+        if (currentReasonIdx < 99) {
+            currentReasonIdx++;
+            updateReasonUI();
+            ensureAudio();
+        }
+    }
+    
+    // ========== BUKA SURAT (klik foto profil) ==========
     function openLoveLetter() {
         if (letterOpened) return;
         letterOpened = true;
-        
-        // reveal the hidden letter text with animation
-        loveLetterBlock.classList.add('show-letter');
-        
-        // reveal the reasons section (buttons + reasons)
-        reasonsWrapper.classList.add('active-reasons');
-        
-        // initialize first reason if needed (currentIdx = 0)
-        updateReasonUI();
-        
-        // extra: ensure audio plays (user clicked envelope, which counts as interaction)
-        ensureAudioPlays();
-        
-        // tiny bonus: change hint style maybe?
-        const hintDiv = document.querySelector('.letter-hint');
-        if (hintDiv) hintDiv.style.opacity = '0.7';
+        loveLetterTextDiv.style.display = 'block';
+        nextBtn.style.display = 'inline-block';
+        ensureAudio();
     }
-
-    // Event: envelope click = open letter & play audio
-    envelopeBtn.addEventListener('click', (e) => {
+    
+    // Event klik foto area
+    photoArea.addEventListener('click', (e) => {
         e.preventDefault();
         openLoveLetter();
-        // also ensure audio starts
-        if (autoAudio.paused) {
-            autoAudio.play().catch(err => console.warn("Audio play failed after click", err));
-        }
     });
-
-    // Love button interaction: next reason (only if letter opened)
+    
+    // Tombol NEXT: pindah ke container reasons, hide container surat
+    nextBtn.addEventListener('click', () => {
+        containerLetter.classList.add('hide-container');
+        containerReasons.classList.remove('hide-container');
+        reasonsActive = false;
+        currentReasonIdx = 0;
+        // Set placeholder tanpa emoticon
+        reasonTextEl.textContent = "Tap the heart to see reason number one";
+        numberSpan.textContent = "?";
+        pressHint.textContent = "Press the button";
+        loveBtn.classList.remove('disabled-love');
+        loveBtn.disabled = false;
+        ensureAudio();
+    });
+    
+    // Tombol BACK: kembali ke container surat, hide container reasons
+    backBtn.addEventListener('click', () => {
+        containerReasons.classList.add('hide-container');
+        containerLetter.classList.remove('hide-container');
+        reasonsActive = false;
+        currentReasonIdx = 0;
+        ensureAudio();
+    });
+    
+    // LOVE BUTTON CLICK HANDLER
     loveBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if (!letterOpened) {
-            // if someone clicks heart before opening letter, maybe remind or just ignore? we could open letter too but better to open letter automatically? 
-            // But UX: clicking heart before opening letter should maybe open it to be friendly. but spec says letter must be clicked. 
-            // We'll still be kind: if not opened yet, open the letter first then go to reason? but to be faithful, we'll just ignore unless letter is open.
-            // But we can also open the letter on first heart click to prevent confusion. Let's gently open letter + then show reason.
-            openLoveLetter();
-            ensureAudioPlays();
-            // after opening, reason UI already shows first reason, no need to increment.
-            return;
+        if (!reasonsActive) {
+            reasonsActive = true;
+            currentReasonIdx = 0;
+            updateReasonUI();
+            ensureAudio();
+        } else {
+            if (currentReasonIdx < 99) {
+                currentReasonIdx++;
+                updateReasonUI();
+                ensureAudio();
+            }
         }
-        nextReason();
     });
-
-    // optional arrow key right (only if letter opened)
+    
+    // Keyboard right arrow untuk next reason
     window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight' && letterOpened && currentIdx < 99) {
+        if (e.key === 'ArrowRight' && !containerReasons.classList.contains('hide-container')) {
             e.preventDefault();
-            nextReason();
+            if (!reasonsActive) {
+                reasonsActive = true;
+                currentReasonIdx = 0;
+                updateReasonUI();
+                ensureAudio();
+            } else if (currentReasonIdx < 99) {
+                currentReasonIdx++;
+                updateReasonUI();
+                ensureAudio();
+            }
         }
     });
     
-    // initial state: reasons area hidden, letter hidden, no reason numbers visible yet
-    reasonsWrapper.classList.remove('active-reasons');
-    reasonsWrapper.style.opacity = '0';
-    reasonsWrapper.style.visibility = 'hidden';
-    // but override by class active-reasons later
-    // set default reason text just in case
-    reasonText.textContent = reasons[0];
-    numberSpan.textContent = "1";
-    loveBtn.disabled = true;   // disabled until letter opens
-    loveBtn.classList.add('disabled-love');
+    // INIT
+    containerLetter.classList.remove('hide-container');
+    containerReasons.classList.add('hide-container');
+    letterOpened = false;
+    loveLetterTextDiv.style.display = 'none';
+    nextBtn.style.display = 'none';
+    reasonsActive = false;
+    currentReasonIdx = 0;
+    reasonTextEl.textContent = "Tap the heart to see reason number one";
+    numberSpan.textContent = "?";
     
-    // final polish: update press hint
-    if(pressHint) pressHint.textContent = "💗 Press the button 💗";
+    attemptAutoPlay();
     
-    // note: everything seamless, after opening letter reason becomes active.
-    // Audio: also we can try to play again on any user tap on card background but fine. 
-    // Additional: if the audio fails completely, envelope click will start it.
-    
-    // Also to satisfy autoplay: some browsers allow muted autoplay but we don't want mute. So envelope click will make it sing.
-    // Additionally try to play on document touch (first touch) but not necessary.
-    document.body.addEventListener('touchstart', function once() {
-        if (autoAudio.paused && !letterOpened) {
-            autoAudio.play().catch(()=>{});
+    const globalAudioHandler = () => {
+        if (!audioStarted) {
+            audioPlayer.play().then(() => audioStarted = true).catch(()=>{});
         }
-    }, { once: true });
-    
-    // Ensure that the first time letter opens, first reason is fully visible and the progress text shows only 'Press the button' (no counter)
-    // we already removed the progress counter div and replaced with press-hint, no numbers like 1/100 anywhere else.
-    // The footer doesn't have counters. only reason number badge shows current number which is fine.
-    // All good.
-    // Also ensure the letter-intro paragraph is fully visible.
-    // No text like 'reason 1 of 100' anywhere.
-    
-    // minor reset for consistency: if envelope clicked and reasons active, we're done.
-    console.log("Ready: sealed love letter, auto-audio will play on user interaction, hidden reason area until envelope clicked.");
+        document.removeEventListener('click', globalAudioHandler);
+        document.removeEventListener('touchstart', globalAudioHandler);
+    };
+    document.addEventListener('click', globalAudioHandler);
+    document.addEventListener('touchstart', globalAudioHandler);
 </script>
 </body>
-</html>
+    </html>
