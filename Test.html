@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Nota · Blue London Jeans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fcf6de;
+    --panel:#eee8dc;
+    --page-a:#b9cfe6;
+    --page-b:#eee8dc;
+    --ink:#2b2013;
+    --brown:#6b5a3e;
+    --brown-soft:#8a7a5e;
+    --rust:#f25c2a;
+    --rust-dark:#d1481c;
+    --mustard:#f25c2a;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,0.25), transparent 40%),
+      linear-gradient(150deg, var(--page-a) 0%, var(--page-b) 100%);
+    font-family:'Outfit', sans-serif;
+    padding: clamp(14px, 4vw, 32px) clamp(10px, 3vw, 20px) 48px;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .container{
+    max-width:600px;
+    width:100%;
+    background: var(--cream);
+    border-radius:18px;
+    padding: 0 0 28px;
+    box-shadow: 0 18px 44px rgba(43,32,19,0.28);
+    border: 3px solid var(--ink);
+    overflow:hidden;
+  }
+
+  /* HEADER */
+  .site-header{
+    text-align:center;
+    padding: clamp(24px,5vw,34px) 20px 22px;
+    background: linear-gradient(135deg, var(--page-a) 0%, var(--rust) 100%);
+    border-bottom: 3px solid var(--ink);
+  }
+  .site-header h1{
+    font-family:'Playfair Display', serif;
+    font-weight:800;
+    font-size: clamp(24px, 6vw, 34px);
+    color: var(--cream);
+    text-shadow: 2px 2px 0 rgba(43,32,19,0.55);
+    letter-spacing: 1.5px;
+  }
+  .site-header .sub{
+    font-family:'Special Elite', monospace;
+    font-size: 11px;
+    color: var(--cream);
+    opacity:0.9;
+    letter-spacing: 5px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .form-grid{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin-top: 20px;
+    padding: 0 clamp(14px, 4vw, 26px);
+  }
+  .field{ display:flex; flex-direction:column; gap:5px; }
+  .field label{
+    font-size:12px;
+    font-weight:700;
+    color: var(--ink);
+    letter-spacing:0.4px;
+    text-transform: uppercase;
+  }
+  .field input, .field select{
+    padding: 11px 14px;
+    border-radius:10px;
+    border: 1.5px solid var(--brown-soft);
+    background: #fffdf7;
+    font-size:14px;
+    font-family:'Outfit', sans-serif;
+    color: var(--ink);
+    transition:0.2s;
+    width:100%;
+    outline:none;
+  }
+  .field input:focus, .field select:focus{
+    border-color: var(--rust);
+    box-shadow: 0 0 0 3px rgba(191,75,38,0.18);
+  }
+  .row-2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+  .item-block{
+    background: var(--panel);
+    border-radius:14px;
+    padding: 18px 16px 16px;
+    margin: 6px 0 4px;
+    border: 1.5px dashed var(--brown-soft);
+    position:relative;
+  }
+  .item-block .remove-item{
+    position:absolute;
+    top:10px;
+    right:12px;
+    background: var(--cream);
+    border: 1.5px solid var(--brown-soft);
+    border-radius:50%;
+    width:26px;
+    height:26px;
+    line-height:1;
+    font-size:16px;
+    color: var(--rust-dark);
+    cursor:pointer;
+    font-weight:700;
+    transition:0.2s;
+  }
+  .item-block .remove-item:hover{ background: var(--rust); color:#fff; border-color: var(--rust); }
+  .item-block h3{
+    font-family:'Special Elite', monospace;
+    font-size:13px;
+    font-weight:400;
+    letter-spacing:1px;
+    text-transform: uppercase;
+    margin-bottom:12px;
+    color: var(--ink);
+  }
+  .product-group .field{ margin-bottom:10px; }
+  .product-group .field:last-child{ margin-bottom:0; }
+
+  .size-options, .color-options{ display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+  .size-options button, .color-options button{
+    background:#fffdf7;
+    border: 1.5px solid var(--brown-soft);
+    border-radius:8px;
+    padding:6px 13px;
+    font-size:12px;
+    font-weight:600;
+    font-family:'Outfit', sans-serif;
+    color: var(--ink);
+    cursor:pointer;
+    transition:0.15s;
+  }
+  .size-options button.active, .color-options button.active{
+    background: var(--rust);
+    border-color: var(--rust);
+    color:#fff;
+  }
+
+  .set-group{
+    background:#fffdf7;
+    border-radius:10px;
+    padding:10px 14px;
+    margin-top:4px;
+    border: 1px solid var(--brown-soft);
+  }
+  .set-group label{
+    display:flex; align-items:center; gap:8px;
+    font-weight:500; font-size:13px; margin:5px 0; color:var(--ink);
+  }
+  .set-group input[type="radio"]{ accent-color: var(--rust); width:16px; height:16px; }
+
+  .btn-primary, .btn-secondary, .btn-download{
+    border-radius:10px;
+    font-weight:700;
+    font-size:14px;
+    font-family:'Outfit', sans-serif;
+    cursor:pointer;
+    transition:0.2s;
+    width:100%;
+    letter-spacing:0.3px;
+    text-transform:uppercase;
+  }
+  .btn-secondary{
+    background: transparent;
+    border: 2px solid var(--rust);
+    color: var(--rust-dark);
+    padding:12px 20px;
+    margin-top:6px;
+  }
+  .btn-secondary:hover{ background: var(--rust); color:#fff; }
+  .btn-download{
+    background: var(--rust);
+    border: 2px solid var(--ink);
+    color:#fff;
+    padding:14px 20px;
+    margin-top: 22px;
+  }
+  .btn-download:hover{ background: var(--rust-dark); }
+
+  .invoice-preview{
+    margin: 26px clamp(14px,4vw,26px) 0;
+    background: var(--panel);
+    border-radius:16px;
+    padding: 20px 12px 26px;
+    border: 1.5px solid var(--brown-soft);
+  }
+  .invoice-preview h2{
+    font-family:'Special Elite', monospace;
+    font-size:14px;
+    font-weight:400;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin: 0 6px 16px;
+    border-bottom: 2px dashed var(--brown-soft);
+    padding-bottom:10px;
+    color: var(--ink);
+    text-align:center;
+  }
+
+  /* Stage keeps a real, fixed-size receipt; scaler only visually shrinks it to fit
+     small screens so what you see is identical (just smaller) to the PNG export. */
+  .nota-stage{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .nota-scaler{
+    transform-origin: top center;
+  }
+
+  /* ===== NOTA / RECEIPT ===== */
+  .nota-card{
+    width: 380px;
+    background: var(--cream);
+    padding: 30px 24px 22px;
+    font-family:'Special Elite', 'Courier New', monospace;
+    position:relative;
+    color: var(--ink);
+    box-shadow: 0 6px 18px rgba(43,32,19,0.18);
+  }
+  .nota-card::before, .nota-card::after{
+    content:"";
+    position:absolute;
+    left:0; right:0;
+    height:12px;
+    background-image:
+      linear-gradient(45deg, var(--cream) 8px, transparent 0),
+      linear-gradient(-45deg, var(--cream) 8px, transparent 0);
+    background-size:16px 16px;
+    background-position: left;
+    background-repeat: repeat-x;
+    background-color: transparent;
+  }
+  .nota-card::before{ top:-11px; }
+  .nota-card::after{ bottom:-11px; }
+
+  .nota-frame{
+    position:absolute;
+    inset:9px;
+    border: 1px dashed rgba(43,32,19,0.35);
+    pointer-events:none;
+  }
+
+  .nota-stamp{
+    position:absolute;
+    top:22px;
+    right:20px;
+    width:64px;
+    height:64px;
+    border:2px solid var(--rust);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform: rotate(-12deg);
+    opacity:0.75;
+  }
+  .nota-stamp span{
+    font-family:'Special Elite', monospace;
+    font-size:9px;
+    color: var(--rust);
+    text-align:center;
+    letter-spacing:1px;
+    line-height:1.3;
+    text-transform:uppercase;
+  }
+
+  .nota-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom:14px;
+    margin-bottom:14px;
+    gap:8px;
+  }
+  .nota-brand{
+    font-family:'Playfair Display', serif;
+    font-weight:800;
+    font-size:21px;
+    letter-spacing:0.5px;
+    color: var(--ink);
+  }
+  .nota-brand small{
+    font-family:'Special Elite', monospace;
+    font-weight:400;
+    font-size:10px;
+    color: var(--brown);
+    display:block;
+    letter-spacing:2px;
+    margin-top:3px;
+    text-transform:uppercase;
+  }
+  .nota-meta{
+    text-align:right;
+    font-size:11px;
+    line-height:1.7;
+    color: var(--brown);
+  }
+  .nota-meta strong{ font-weight:400; color: var(--ink); font-size:13px; }
+
+  .nota-divider{
+    text-align:center;
+    font-size:11px;
+    letter-spacing:4px;
+    color: var(--brown-soft);
+    margin: 0 0 14px;
+  }
+
+  .nota-client{
+    background: rgba(43,32,19,0.05);
+    padding:10px 12px;
+    border-radius:2px;
+    font-size:12px;
+    margin-bottom:14px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:4px;
+    border-left: 4px solid var(--rust);
+  }
+
+  .nota-section-label{
+    margin-bottom:8px;
+    font-weight:400;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color: var(--brown);
+    border-bottom: 1px dashed var(--brown-soft);
+    padding-bottom:6px;
+  }
+
+  .nota-item{
+    display:flex;
+    justify-content:space-between;
+    gap:6px;
+    padding:9px 0;
+    border-bottom: 1px dashed rgba(43,32,19,0.3);
+    font-size:12px;
+  }
+  .nota-item .desc{ font-weight:400; flex:2; color: var(--ink); line-height:1.4; }
+  .nota-item .qty{ flex:0.4; text-align:center; color: var(--brown); }
+  .nota-item .price{ flex:1; text-align:right; font-weight:400; color: var(--ink); }
+
+  .nota-total{
+    margin-top:14px;
+    text-align:right;
+    font-size:13px;
+    border-top: 2px solid var(--ink);
+    padding-top:12px;
+  }
+  .nota-total p{ margin:4px 0; color: var(--ink); }
+  .nota-total .grand{ font-size:19px; font-weight:400; }
+
+  .nota-footer{
+    margin-top:18px;
+    font-size:10px;
+    text-align:center;
+    color: var(--brown-soft);
+    border-top: 1px dashed rgba(43,32,19,0.3);
+    padding-top:12px;
+    letter-spacing:0.8px;
+    line-height:1.7;
+  }
+  .nota-footer .thanks{
+    display:block;
+    font-size:12px;
+    letter-spacing:3px;
+    color: var(--ink);
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+
+  .empty-note{
+    text-align:center;
+    color: var(--brown);
+    padding: 40px 16px;
+    font-size:13px;
+    font-family:'Special Elite', monospace;
+    letter-spacing:0.5px;
+  }
+
+  .item-selector{ margin-bottom:6px; }
+  .item-selector select{
+    padding:10px 14px;
+    border-radius:10px;
+    border: 1.5px solid var(--brown-soft);
+    font-family:'Outfit', sans-serif;
+    font-weight:500;
+    font-size:13px;
+    background:#fffdf7;
+    width:100%;
+    outline:none;
+  }
+  .item-selector select:focus{ border-color: var(--rust); }
+  .hidden-item{ display:none; }
+
+  @media (max-width: 420px){
+    .row-2{ grid-template-columns: 1fr; }
+    .nota-card{ padding: 26px 18px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="site-header">
+    <h1>Blue London Jeans</h1>
+    <div class="sub">collection</div>
+  </div>
+
+  <div class="form-grid">
+    <div class="row-2">
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="fullName" placeholder="Full name" value="">
+      </div>
+      <div class="field">
+        <label>Date</label>
+        <input type="date" id="noteDate" value="2026-07-21">
+      </div>
+    </div>
+
+    <div id="itemsContainer"></div>
+
+    <button class="btn-secondary" id="addItemBtn">+ Add Item</button>
+  </div>
+
+  <div class="invoice-preview" id="previewArea">
+    <h2>Nota Preview</h2>
+    <div class="nota-stage" id="notaStage">
+      <div class="nota-scaler" id="notaScaler">
+        <div id="notaDisplay">
+          <div class="empty-note">Add items to generate nota</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 0 clamp(14px,4vw,26px);">
+    <button class="btn-download" id="downloadNotaBtn">Download Nota (PNG)</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+  (function() {
+    const fullNameInput = document.getElementById('fullName');
+    const dateInput = document.getElementById('noteDate');
+    const itemsContainer = document.getElementById('itemsContainer');
+    const addItemBtn = document.getElementById('addItemBtn');
+    const notaDisplay = document.getElementById('notaDisplay');
+    const notaStage = document.getElementById('notaStage');
+    const notaScaler = document.getElementById('notaScaler');
+    const downloadBtn = document.getElementById('downloadNotaBtn');
+
+    function createItemBlock(index) {
+      return `
+        <div class="item-block" data-index="${index}">
+          <button class="remove-item" data-index="${index}">×</button>
+          <h3>Item ${index+1}</h3>
+
+          <div class="field item-selector">
+            <label>Item Name</label>
+            <select class="item-type-select" data-index="${index}">
+              <option value="monroe">Monroe Midnight Blue Dress</option>
+              <option value="bardot">Bardot Denim Sun-Set</option>
+            </select>
+          </div>
+
+          <div class="product-group monroe-fields" data-index="${index}">
+            <div class="field">
+              <label>Size</label>
+              <div class="size-options" data-group="monroeSize_${index}">
+                <button data-value="XS">XS</button>
+                <button data-value="S" class="active">S</button>
+                <button data-value="M">M</button>
+                <button data-value="L">L</button>
+                <button data-value="XL">XL</button>
+              </div>
+              <input type="hidden" class="monroe-size" value="S">
+            </div>
+            <div class="field">
+              <label>Color</label>
+              <div class="color-options" data-group="monroeColor_${index}">
+                <button data-value="Vintage Ecru (20)">Vintage Ecru (20)</button>
+                <button data-value="Classic Indigo (30)" class="active">Classic Indigo (30)</button>
+                <button data-value="Midnight Wash (31)">Midnight Wash (31)</button>
+              </div>
+              <input type="hidden" class="monroe-color" value="Classic Indigo (30)">
+            </div>
+          </div>
+
+          <div class="product-group bardot-fields hidden-item" data-index="${index}">
+            <div class="field">
+              <label>Option</label>
+              <div class="set-group">
+                <label><input type="radio" name="bardotSet_${index}" value="bra" checked> Bra only</label>
+                <label><input type="radio" name="bardotSet_${index}" value="shorts"> Shorts only</label>
+                <label><input type="radio" name="bardotSet_${index}" value="complete"> Complete Set</label>
+              </div>
+              <input type="hidden" class="bardot-set" value="bra">
+            </div>
+            <div class="field">
+              <label>Size</label>
+              <div class="size-options" data-group="bardotSize_${index}">
+                <button data-value="XS">XS</button>
+                <button data-value="S" class="active">S</button>
+                <button data-value="M">M</button>
+                <button data-value="L">L</button>
+                <button data-value="XL">XL</button>
+              </div>
+              <input type="hidden" class="bardot-size" value="S">
+            </div>
+            <div class="field">
+              <label>Color</label>
+              <div class="color-options" data-group="bardotColor_${index}">
+                <button data-value="Sun-bleached Blue (28)">Sun-bleached Blue (28)</button>
+                <button data-value="Classic Indigo (30)" class="active">Classic Indigo (30)</button>
+                <button data-value="Onyx Black (32)">Onyx Black (32)</button>
+              </div>
+              <input type="hidden" class="bardot-color" value="Classic Indigo (30)">
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function attachItemEvents(block) {
+      const removeBtn = block.querySelector('.remove-item');
+      if (removeBtn) {
+        removeBtn.addEventListener('click', function() {
+          if (itemsContainer.children.length > 1) {
+            block.remove();
+            reindexItems();
+            updateNota();
+          } else {
+            alert('At least one item is required.');
+          }
+        });
+      }
+
+      const typeSelect = block.querySelector('.item-type-select');
+      const monroeFields = block.querySelector('.monroe-fields');
+      const bardotFields = block.querySelector('.bardot-fields');
+
+      if (typeSelect) {
+        typeSelect.addEventListener('change', function() {
+          if (this.value === 'monroe') {
+            monroeFields.classList.remove('hidden-item');
+            bardotFields.classList.add('hidden-item');
+          } else {
+            monroeFields.classList.add('hidden-item');
+            bardotFields.classList.remove('hidden-item');
+          }
+          updateNota();
+        });
+      }
+
+      block.querySelectorAll('.size-options').forEach(group => {
+        const btns = group.querySelectorAll('button');
+        const hiddenInput = group.parentElement.querySelector('input[type="hidden"]');
+        btns.forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            btns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            if (hiddenInput) hiddenInput.value = this.dataset.value;
+            updateNota();
+          });
+        });
+      });
+
+      block.querySelectorAll('.color-options').forEach(group => {
+        const btns = group.querySelectorAll('button');
+        const hiddenInput = group.parentElement.querySelector('input[type="hidden"]');
+        btns.forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            btns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            if (hiddenInput) hiddenInput.value = this.dataset.value;
+            updateNota();
+          });
+        });
+      });
+
+      block.querySelectorAll('input[type="radio"][name^="bardotSet_"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+          const parentBlock = this.closest('.item-block');
+          const hiddenSet = parentBlock.querySelector('.bardot-set');
+          if (hiddenSet) hiddenSet.value = this.value;
+          updateNota();
+        });
+      });
+
+      fullNameInput.addEventListener('input', updateNota);
+      dateInput.addEventListener('input', updateNota);
+    }
+
+    function reindexItems() {
+      const blocks = itemsContainer.querySelectorAll('.item-block');
+      blocks.forEach((block, idx) => {
+        block.dataset.index = idx;
+        const h3 = block.querySelector('h3');
+        if (h3) h3.textContent = `Item ${idx+1}`;
+        block.querySelectorAll('[data-index]').forEach(el => {
+          el.dataset.index = idx;
+        });
+        block.querySelectorAll('input[type="radio"][name^="bardotSet_"]').forEach(radio => {
+          radio.name = `bardotSet_${idx}`;
+        });
+      });
+    }
+
+    function addItem() {
+      const newIndex = itemsContainer.children.length;
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = createItemBlock(newIndex);
+      const block = tempDiv.firstElementChild;
+      itemsContainer.appendChild(block);
+      attachItemEvents(block);
+      updateNota();
+    }
+
+    function updateNota() {
+      const name = fullNameInput.value.trim() || 'Name not filled';
+      const date = dateInput.value || new Date().toISOString().split('T')[0];
+
+      const blocks = itemsContainer.querySelectorAll('.item-block');
+      let itemsHtml = '';
+      let grandTotal = 0;
+      let itemCount = 0;
+
+      blocks.forEach((block) => {
+        const typeSelect = block.querySelector('.item-type-select');
+        const type = typeSelect ? typeSelect.value : 'monroe';
+
+        if (type === 'monroe') {
+          const size = block.querySelector('.monroe-size')?.value || 'S';
+          const color = block.querySelector('.monroe-color')?.value || 'Classic Indigo (30)';
+          const desc = `Monroe Midnight Blue Dress · ${size} · ${color}`;
+          const price = 148.00;
+          grandTotal += price;
+          itemCount++;
+          itemsHtml += `
+            <div class="nota-item">
+              <span class="desc">${desc}</span>
+              <span class="qty">1</span>
+              <span class="price">$${price.toFixed(2)}</span>
+            </div>
+          `;
+        } else {
+          const setVal = block.querySelector('.bardot-set')?.value || 'bra';
+          const size = block.querySelector('.bardot-size')?.value || 'S';
+          const color = block.querySelector('.bardot-color')?.value || 'Classic Indigo (30)';
+          const prices = { bra: 58.00, shorts: 78.00, complete: 128.00 };
+          const price = prices[setVal] || 58;
+          const setLabel = setVal === 'bra' ? 'Bra' : setVal === 'shorts' ? 'Shorts' : 'Complete Set';
+          const desc = `Bardot Denim Sun-Set · ${setLabel} · ${size} · ${color}`;
+          grandTotal += price;
+          itemCount++;
+          itemsHtml += `
+            <div class="nota-item">
+              <span class="desc">${desc}</span>
+              <span class="qty">1</span>
+              <span class="price">$${price.toFixed(2)}</span>
+            </div>
+          `;
+        }
+      });
+
+      if (itemCount === 0) {
+        notaDisplay.innerHTML = `<div class="empty-note">Add items to generate nota</div>`;
+        fitNota();
+        return;
+      }
+
+      const notaHtml = `
+        <div class="nota-card" id="notaCard">
+          <div class="nota-frame"></div>
+          <div class="nota-stamp"><span>Blue<br>London<br>★ ★ ★</span></div>
+          <div class="nota-header">
+            <div class="nota-brand">
+              Blue London Jeans <small>collection</small>
+            </div>
+            <div class="nota-meta">
+              No. <strong>#${Math.floor(1000 + Math.random()*9000)}</strong><br>
+              ${date}
+            </div>
+          </div>
+          <div class="nota-divider">★ &nbsp; N O T A &nbsp; ★</div>
+          <div class="nota-client">
+            <span><strong>${name}</strong></span>
+            <span>${date}</span>
+          </div>
+          <div class="nota-section-label">Order details</div>
+          ${itemsHtml}
+          <div class="nota-total">
+            <p class="grand"><strong>Total &nbsp; $${grandTotal.toFixed(2)}</strong></p>
+            <p style="font-size:10px; color:var(--brown-soft);">including tax &amp; service</p>
+          </div>
+          <div class="nota-footer">
+            <span class="thanks">Thank You</span>
+            Blue London Jeans, for roleplay purpose only
+          </div>
+        </div>
+      `;
+
+      notaDisplay.innerHTML = notaHtml;
+      fitNota();
+    }
+
+    // --- Keep preview visually fitted on small screens WITHOUT changing the
+    // real element size, so the downloaded PNG always matches what's shown ---
+    function fitNota() {
+      const card = document.getElementById('notaCard');
+      if (!card) {
+        notaScaler.style.transform = 'none';
+        notaStage.style.height = 'auto';
+        return;
+      }
+      notaScaler.style.transform = 'none';
+      const cardWidth = card.offsetWidth;
+      const cardHeight = card.offsetHeight;
+      const availWidth = notaStage.clientWidth;
+      const scale = availWidth < cardWidth ? availWidth / cardWidth : 1;
+      notaScaler.style.transform = `scale(${scale})`;
+      notaStage.style.height = (cardHeight * scale) + 'px';
+    }
+
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(fitNota, 120);
+    });
+
+    async function downloadNota() {
+      const card = document.getElementById('notaCard');
+      if (!card) {
+        alert('Please add items first.');
+        return;
+      }
+      const prevTransform = notaScaler.style.transform;
+      notaScaler.style.transform = 'none';
+      try {
+        const canvas = await html2canvas(card, {
+          scale: 2.5,
+          backgroundColor: '#eee8dc',
+          logging: false,
+          useCORS: true,
+          allowTaint: false
+        });
+        const link = document.createElement('a');
+        link.download = `nota_blue_london_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      } catch (e) {
+        alert('Error generating image: ' + e);
+      } finally {
+        notaScaler.style.transform = prevTransform;
+        fitNota();
+      }
+    }
+
+    function init() {
+      addItem();
+      addItemBtn.addEventListener('click', addItem);
+      downloadBtn.addEventListener('click', downloadNota);
+      fitNota();
+    }
+
+    init();
+  })();
+</script>
+</body>
+</html>
